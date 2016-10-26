@@ -5,11 +5,14 @@ public enum Priority {
     IDLE, RUN, ATTACK, JUMP, DAMAGED, DEAD
 }
 public interface IState {
+    int Prit { get; }
+    bool Finish { get; }
 
     void OnStart();
     
     void OnUpdate();
     void OnEnd();
+    //int returnPriority();
 }
 
 public class JumpState : IState {
@@ -17,6 +20,24 @@ public class JumpState : IState {
     private IPlayerControl _player;
     private const string aniName = "JUMP";
     private bool bJmpEnd = false;
+
+    public int Prit
+    {
+        get
+        {
+            return (int)Priority.JUMP;
+        }
+    }
+
+    public bool Finish
+    {
+        get
+        {
+            return _player.IsAnimationOver(aniName);
+        }
+    }
+
+    //private int prit = (int)Priority.JUMP;
 
     public JumpState(IPlayerControl player)
     {
@@ -28,7 +49,8 @@ public class JumpState : IState {
         _player.PlayAnimation(aniName);
         _player.CollisionOff();
         _player.Jumping = true;
-        
+        Debug.Log("jump ani start");
+
     }
 
     public void OnEnd()
@@ -49,13 +71,33 @@ public class JumpState : IState {
         }
     }
 
-
+   /* public int returnPriority()
+    {
+        return prit;
+    }*/
 }
 
 public class IdleState : IState {
 
     private IPlayerControl _player;
     private const string aniName = "IDLE";
+
+    public int Prit
+    {
+        get
+        {
+            return (int)Priority.IDLE;
+        }
+    }
+
+    public bool Finish
+    {
+        get
+        {
+            return _player.IsAnimationOver(aniName);
+        }
+    }
+    //  private int prit = (int)Priority.IDLE;
 
     public IdleState(IPlayerControl iplayer) {
 
@@ -76,12 +118,36 @@ public class IdleState : IState {
     {
         
     }
+
+   /* public int returnPriority()
+    {
+        return prit;
+    }*/
 }
 
 public class RunState : IState {
 
     private IPlayerControl _player;
     private const string aniName = "RUN";
+
+    public int Prit
+    {
+        get
+        {
+            return (int)Priority.RUN;
+        }
+    }
+
+    public bool Finish
+    {
+        get
+        {
+            return _player.IsAnimationOver(aniName);
+        }
+    }
+
+    //private int prit = (int)Priority.RUN;
+
 
     public RunState(IPlayerControl iplayer) {
         _player = iplayer;
@@ -101,11 +167,18 @@ public class RunState : IState {
     {
         
     }
+
+   /* public int returnPriority()
+    {
+        return prit;
+    }*/
 }
 
-public class AttackState : IState {
+/*
+ * public class AttackState : IState {
     private IPlayerControl _player;
     private const string aniName = "ATTACK";
+    //public int prit = (int)Priority.ATTACK;
 
     public AttackState(IPlayerControl player) {
         _player = player;
@@ -123,6 +196,11 @@ public class AttackState : IState {
     public void OnEnd()
     {
       
+    }
+
+   public int returnPriority()
+    {
+        return 0;
     }
 }
 
@@ -147,6 +225,11 @@ public class Damaged : IState
     public void OnUpdate()
     {
         
+    }
+
+    public int returnPriority()
+    {
+        return 0;
     }
 }
 
@@ -178,4 +261,10 @@ public class Dead : IState {
     {
      
     }
+
+    public int returnPriority()
+    {
+        return 0;
+    }
 }
+*/

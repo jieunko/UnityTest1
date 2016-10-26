@@ -36,9 +36,10 @@ public class PlayerControl : MonoBehaviour, IPlayerControl
     private IState mState;
 
     private IState m_next_state;
-    /*JumpState jump;
+   /* JumpState jump;
     IdleState idle;
-    RunState run;*/
+    RunState run;
+    */
 
     StateManager stateManager;
 
@@ -63,9 +64,11 @@ public class PlayerControl : MonoBehaviour, IPlayerControl
     void Awake()
     {
         animator = GetComponent<Animator>();
-        //  jump = new JumpState(this);
-        //  idle = new IdleState(this);
-        //  run = new RunState(this);
+        /*  jump = new JumpState(this);
+           idle = new IdleState(this);
+           run = new RunState(this);
+           */
+        
         stateManager = new StateManager(this);
 
         gameManager = FindObjectOfType<GameManager>();
@@ -75,7 +78,7 @@ public class PlayerControl : MonoBehaviour, IPlayerControl
     {
         //this.gameObject.GetComponent<CharacterController>();
         controller = GetComponent<CharacterController>();
-        //  mState = idle;
+         // mState = idle;
     }
 
 
@@ -104,7 +107,7 @@ public class PlayerControl : MonoBehaviour, IPlayerControl
         float curSpeed = speed * Input.GetAxis("Vertical");
         controller.SimpleMove(forward * curSpeed);
 
-        //  mState.OnUpdate();
+          //mState.OnUpdate();
 
 
         if (controller != null)
@@ -117,13 +120,14 @@ public class PlayerControl : MonoBehaviour, IPlayerControl
             }
             else
             {
-                //SetState(idle);
+               // SetState(idle);
                 // stateManager.SetIdleState(this);
                 stateManager.SetIdleState();
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
+               // SetState(jump);
                 stateManager.SetJumpState();
             }
 
@@ -166,8 +170,8 @@ public class PlayerControl : MonoBehaviour, IPlayerControl
           SetState(jump);
       }
 
-
-      */
+    */
+      
     #endregion
 
     private void AniTester()
@@ -175,7 +179,7 @@ public class PlayerControl : MonoBehaviour, IPlayerControl
         if (Input.GetKeyDown(KeyCode.Z))
         {
             //animator.Play("IDLE");
-            //  SetState(idle);
+             // SetState(idle);
             stateManager.SetIdleState();
         }
         else if (Input.GetKeyDown(KeyCode.X))
@@ -187,7 +191,7 @@ public class PlayerControl : MonoBehaviour, IPlayerControl
         }
         else if (Input.GetKeyDown(KeyCode.C))
         {
-            // animator.Play("JUMP");
+            ///animator.Play("JUMP");
             // SetState(jump);
             stateManager.SetJumpState();
         }

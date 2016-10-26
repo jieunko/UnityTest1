@@ -3,34 +3,36 @@ using System.Collections;
 
 
 
-public class StateManager {
-/*
+ 
+ public class StateManager {
+
     private JumpState jump;
     private IdleState idle;
     private RunState run;
-    */
-    private IState preState;
-
+    
+    private IState currentState;
+    private IState nextState;
+    private IState defaultIdle;
     private IPlayerControl player;
 
  //   private bool bJumping = false;
 
     public StateManager(IPlayerControl _player) {
         player = _player;
-        preState = new IdleState(player);
+        defaultIdle = new IdleState(player);
+        currentState = defaultIdle;
+        nextState = defaultIdle; 
     }  
     void SetState(IState state)
     {
-        preState.OnEnd();
-        preState = state;
-        preState.OnStart();
+       
     }
 
     public void SetIdleState()
     {
         //  if (preState is IdleState || bJumping == true)
 
-        if (preState is IdleState)
+        if (currentState is IdleState)
             return;
         // SetState(idle);
         SetState(new IdleState(player));
@@ -38,7 +40,7 @@ public class StateManager {
     public void SetRunState()
     {
         //if (preState is RunState || bJumping == true)
-        if (preState is RunState)
+        if (currentState is RunState)
             return;
         SetState(new RunState(player));
     }
@@ -46,14 +48,14 @@ public class StateManager {
     {
 
         Debug.Log("jump State occurred");
-        if (preState is JumpState)
-            
+        if (currentState is JumpState)
             return;
         SetState(new JumpState(player));
     }
 
-    public void Tick() {
-        preState.OnUpdate();
+    public void onUpdate() {
+        //preState.OnUpdate();
     }
-
+    
 }
+
